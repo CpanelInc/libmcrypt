@@ -1,13 +1,17 @@
+%define ns_prefix ea
+%define pkg_base  libmcrypt
+%define pkg_name  %{ns_prefix}-%{pkg_base}
+%define _prefix   /opt/cpanel/%{pkg_base}
+
 Summary:   libmcrypt is a data encryption library.
-Name:      libmcrypt
+Name:      %{pkg_name}
 Version:   2.5.8
-Release:   1
+Release:   2
 License:   LGPL
-Source:    ftp://mcrypt.hellug.gr/pub/crypto/mcrypt/%{name}-%{version}.tar.gz
+Source:    ftp://mcrypt.hellug.gr/pub/crypto/mcrypt/%{pkg_base}-%{version}.tar.gz
 Vendor:    Nikos Mavroyanopoulos <nmav@gnutls.org>
 Group:     System Environment/Libraries
 Packager:  cPanel, Inc.
-Prefix:    /usr
 
 %description
 libmcrypt is a data encryption library. The library is thread safe
@@ -20,19 +24,18 @@ TWOFISH, BLOWFISH, ARCFOUR, WAKE and more.
 %package devel
 Summary: Development files of the libmcrypt data encryption library.
 Group: Development/Libraries
-Requires: libmcrypt = %{version}
+Requires: %{pkg_name} = %{version}
 
 %description devel
 Header file and static libraries of libmcrypt data encryption library.
 
 %prep
-%setup
+%setup -n %{pkg_base}-%{version}
 
 %build
 ./configure \
-    --prefix=%{prefix} \
+    --prefix=%{_prefix} \
     --libdir=%{_libdir} \
-    --includedir=%{_includedir} \
     --disable-dependency-tracking \
     --disable-maintainer-mode
 
@@ -66,12 +69,16 @@ ldconfig
 %{_libdir}/libmcrypt.la
 %{_includedir}/mcrypt.h
 %{_includedir}/mutils/mcrypt.h
-%{prefix}/man/man3/mcrypt.*
+%{_prefix}/man/man3/mcrypt.*
 %{_bindir}/libmcrypt-config
 %{_datadir}/aclocal/libmcrypt.m4
 
 %changelog
-* Thu Aut 06 2015 Trinity Quirk <trinity.quirk@cpanel.net> - 2.5.8-1
+* Tue Aug 11 2015 Trinity Quirk <trinity.quirk@cpanel.net> - 2.5.8-2
+- Renamed to ea-libmcrypt
+- Moved into /opt/cpanel
+
+* Thu Aug 06 2015 Trinity Quirk <trinity.quirk@cpanel.net> - 2.5.8-1
 - Repaired for cPanel distribution
 
 * Tue Dec 17 2002 Germano Rizzo <mano@pluto.linux.it>
