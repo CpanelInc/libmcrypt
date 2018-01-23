@@ -7,7 +7,7 @@ Summary:   libmcrypt is a data encryption library.
 Name:      %{pkg_name}
 Version:   2.5.8
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4554 for more details
-%define release_prefix 4
+%define release_prefix 5
 Release: %{release_prefix}%{?dist}.cpanel
 License:   LGPL
 Source:    ftp://mcrypt.hellug.gr/pub/crypto/mcrypt/%{pkg_base}-%{version}.tar.gz
@@ -60,6 +60,8 @@ ldconfig
 ldconfig
 
 %files
+/opt/cpanel/libmcrypt
+
 #%defattr(-, root, root, 0755)
 %{_libdir}/libmcrypt.so*
 
@@ -75,6 +77,9 @@ ldconfig
 %{_datadir}/aclocal/libmcrypt.m4
 
 %changelog
+* Tue Jan 23 2018 Dan Muey <dan@cpanel.net> - 2.5.8-5
+- EA-7136: Add root path to %files
+
 * Fri Dec 16 2016 Cory McIntire <cory@cpanel.net> - 2.5.8-4
 - Updated Vendor field
 
