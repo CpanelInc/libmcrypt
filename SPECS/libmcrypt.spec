@@ -47,6 +47,8 @@ rm -rf $RPM_BUILD_ROOT
 
 make DESTDIR=$RPM_BUILD_ROOT install
 
+mkdir -p ${RPM_BUILD_ROOT}/%{_docdir}
+
 %check
 make check
 
@@ -63,10 +65,10 @@ ldconfig
 /opt/cpanel/libmcrypt
 
 #%defattr(-, root, root, 0755)
-%{_libdir}/libmcrypt.so*
 
 %files devel
 #%defattr(-, root, root, 0755)
+%dir %{_docdir}
 %doc doc/README* doc/example.c AUTHORS ChangeLog KNOWN-BUGS NEWS
 %doc THANKS README TODO
 %{_libdir}/libmcrypt.la
@@ -78,7 +80,7 @@ ldconfig
 
 %changelog
 * Tue Jan 23 2018 Dan Muey <dan@cpanel.net> - 2.5.8-5
-- EA-7136: Add root path to %files
+- EA-7136: Add root path to %files and Ensure ownership of %{_docdir}
 
 * Fri Dec 16 2016 Cory McIntire <cory@cpanel.net> - 2.5.8-4
 - Updated Vendor field
